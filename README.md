@@ -52,7 +52,7 @@
 
 ```
 yukti-smartstudy/
-+-- client/                     # React + Vite Frontend
++-- Frontend/                     # React + Vite Frontend
 |   +-- src/
 |   |  +-- components/         # Common, layout, dashboard, quiz, flashcard, and AI widgets
 |   |   +-- context/            # AuthContext, ThemeContext, NotificationContext
@@ -64,7 +64,7 @@ yukti-smartstudy/
 |  +-- package.json
 |   +-- vite.config.js
 |
-+-- server/                     # Express Backend
++-- Backend/                     # Express Backend
 |   +-- config/                 # MongoDB & Cloudinary configs
 |   +-- controllers/            # 15 REST API controllers
 |   +-- middleware/             # Auth, Upload, Validation, Error Handling
