@@ -1,49 +1,56 @@
 
 import axios from 'axios';
 
-// Dynamically use VITE_API_URL in production (e.g. on Vercel), fallback to '/api' in local dev (Vite proxy)
-const getBaseURL = () => {
-  const envUrl = import.meta.env.VITE_API_URL;
-  if (envUrl) {
-    // Ensure it ends with /api
-    return envUrl.endsWith('/api') ? envUrl : `${envUrl.replace(/\/$/, '')}/api`;
-  }
-  return '/api';
-};
-
+// Render Backend API URL
 const api = axios.create({
-  baseURL: getBaseURL(),
+  baseURL: 'https://yukti-smartstudy.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
+// Add JWT token to every request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('yukti_token');
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
 );
 
+// Handle API responses and errors
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    return response.data;
+  },
+
   (error) => {
-    const message = error.response?.data?.message || error.message || 'Something went wrong';
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Something went wrong';
+
+    // If token is invalid/expired
     if (error.response?.status === 401) {
       if (
-        window.location.pathname !== '/login' && 
-        window.location.pathname !== '/register' && 
+        window.location.pathname !== '/login' &&
+        window.location.pathname !== '/register' &&
         window.location.pathname !== '/'
       ) {
         localStorage.removeItem('yukti_token');
         localStorage.removeItem('yukti_user');
+
         window.location.href = '/login';
       }
     }
+
     return Promise.reject(new Error(message));
   }
 );
