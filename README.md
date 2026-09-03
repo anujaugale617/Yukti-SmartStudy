@@ -108,11 +108,11 @@ yukti-smartstudy/
 
 ### 1. Clone & Setup Backend
 ```bash
-cd yukti-smartstudy/server
+cd yukti-smartstudy/Backend
 npm install
 ```
 
-Create `server/.env`:
+Create `Backend/.env`:
 ```env
 PORT=5000
 NODE_ENV=development
@@ -137,7 +137,7 @@ npm start
 
 ### 4. Setup & Start Frontend Client
 ```bash
-cd ../client
+cd ../Frontend
 npm install
 npm run dev
 # Frontend will run on http://localhost:5173
